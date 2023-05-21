@@ -108,6 +108,9 @@ def val_img():
                 im_file = BytesIO(im_bytes)  # convert image to file-like object
                 img = Image.open(im_file)   # img is now PIL Image object
                 img = img.resize((300, 300))
+                img=img.rotate(90)
+                img=remove(img)
+
                 print ("image decoded")
             except Exception as e:
                 print(f"Exception decoding img: {e}" )
@@ -138,89 +141,19 @@ def val_img():
                     class_pred="Sano"
                     class_prob=1-class_prob
                 elif class_pred==0:
-                    class_pred="Fito"
+                    class_pred="Lasiodiplodia"
                 elif class_pred==1:
-                    class_pred="Mazorca negra"
+                    class_pred="Mazorca Negra"
                 elif class_pred==2:
-                    class_pred="Monoliasis"
+                    class_pred="Monoliosis"
                 elif class_pred==3:
-                    class_pred="Monoliasis Intermedia"
+                    class_pred="Monoliosis"
 
-                message=f"Predicción: {class_pred} con probabilidad de {class_prob}"
+                message=f"{class_pred}"
                 return jsonify({"img":message})
             except Exception as e:
                 print(f"Exception making predictions img: {e}" )
-                return None
-
-            # try:
-            #     preds=[]
-            #     for model in models:
-            #         individual_preds = model.predict(x)
-            #         individual_preds=individual_preds.tolist()[0]
-            #         preds.append(individual_preds[0])  
-
-            #     class_pred=4 if np.argmax(np.array(preds))<0.5 else np.argmax(np.array(preds))
-            #     class_prob=preds[class_pred] if class_pred!=4 else 1-np.argmax(np.array(preds))
-            #     if class_pred==0:
-            #         class_pred=f"Fito {class_prob:.0%}"
-            #     elif class_pred==1:
-            #         class_pred=f"Mazorca negra {class_prob:.0%}"
-            #     elif class_pred==2:
-            #         class_pred=f"Monoliasis {class_prob:.0%}"
-            #     elif class_pred==3:
-            #         class_pred=f"Monoliasis Intermedia {class_prob:.0%}"
-            #     elif class_pred==4:
-            #         class_pred=f"Sano {class_prob:.0%}"
-
-            #     print ("image predicted")
-            #     return jsonify({"img":str(class_pred)})
-            # except Exception as e:
-            #     print(f"Exception making predictions img: {e}" )
-            #     return None
-            
-            
-            # try:
-            #     preds = model.predict(x)
-            #     preds=preds.tolist()[0]
-            #     if np.argmax(np.array(preds))==0:
-            #         class_pred="Cat"
-            #     elif np.argmax(np.array(preds))==1:
-            #         class_pred="Dog"
-                
-            #     print ("image predicted")
-            #     return jsonify({"img":str(class_pred)})
-            # except Exception as e:
-            #     print(f"Exception making predictions img: {e}" )
-            #     return jsonify({f"error":f"Exception making predictions img: {e}"})
-
-
-
-            # Transfor image to PIL
-            #==============================================================================
-
-            # im_bytes = base64.b64decode(d)   # im_bytes is a binary image
-            # im_file = BytesIO(im_bytes)  # convert image to file-like object
-            # img = Image.open(im_file)   # img is now PIL Image object
-            # img = img.resize((300, 300))
-            
-
-            # # Preprocessing the image
-            # x = tf.keras.utils.img_to_array(img)
-            # # x = np.true_divide(x, 255)
-            # x = np.expand_dims(x, axis=0)
-            # # Be careful how your trained model deals with the input
-            # # otherwise, it won’t make correct prediction!
-
-            
-
-            # preds = model.predict(x)
-            # preds=preds.tolist()[0]
-            # if preds[0]==1:
-            #     class_pred="Cat"
-            # elif preds[1]==1:
-            #     class_pred="Dog"
-            # return jsonify({"img":str(class_pred)})
-            
+                return None           
         elif request.method=="GET":
             #data=request.args.get("img")
             d=request.args.get("img")
