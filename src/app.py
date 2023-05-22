@@ -39,61 +39,6 @@ for path in models_path:
     tmp.load_weights(Model_weights)
     models.append(tmp)
 
-
-def decode_img(img):
-    try:
-        im_bytes = base64.b64decode(img)   # im_bytes is a binary image
-        im_file = BytesIO(im_bytes)  # convert image to file-like object
-        img = Image.open(im_file)   # img is now PIL Image object
-        img = img.resize((300, 300))
-        img=remove(img)
-
-        print ("image decoded")
-        return img 
-    except Exception as e:
-        print(f"Exception decoding img: {e}" )
-        return None
-    
-
-def preprocessing_img(img):
-    try:
-        x = tf.keras.utils.img_to_array(img)
-        # x = np.true_divide(x, 255)
-        x = np.expand_dims(x, axis=0)
-        print ("preprocess compleated")
-        return x
-    except Exception as e:
-        print(f"Exception preprocessing img: {e}" )
-        return None
-    
-def predict_img(x):
-    try:
-        preds=[]
-        for model in models:
-            individual_preds = model.predict(x)
-            individual_preds=individual_preds.tolist()[0]
-            preds.append(individual_preds[0])  
-
-        class_pred=4 if np.argmax(np.array(preds))<0.5 else np.argmax(np.array(preds))
-        class_prob=preds[class_pred] if class_pred!=4 else 1-preds[class_pred]
-        if class_pred==0:
-            class_pred=f"Fito {class_prob:.0%}"
-        elif class_pred==1:
-            class_pred=f"Mazorca negra {class_prob:.0%}"
-        elif class_pred==2:
-            class_pred=f"Monoliasis {class_prob:.0%}"
-        elif class_pred==3:
-            class_pred=f"Monoliasis Intermedia {class_prob:.0%}"
-        elif class_pred==4:
-            class_pred=f"Sano {class_prob:.0%}"
-
-        print ("image predicted")
-        return jsonify({"img":str(class_pred)})
-    except Exception as e:
-        print(f"Exception making predictions img: {e}" )
-        return None
-
-
 app=Flask(__name__)
 
 @app.route("/uImg", methods=['GET','POST'])
@@ -107,9 +52,10 @@ def val_img():
                 im_bytes = base64.b64decode(d)   # im_bytes is a binary image
                 im_file = BytesIO(im_bytes)  # convert image to file-like object
                 img = Image.open(im_file)   # img is now PIL Image object
-                img = img.resize((300, 300))
-                img=img.rotate(90)
                 img=remove(img)
+                img = img.convert(mode='RGB')
+                img = img.resize((300, 300))
+                
 
                 print ("image decoded")
             except Exception as e:
