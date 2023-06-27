@@ -67,7 +67,7 @@ def val_img():
                 x = tf.keras.utils.img_to_array(img)
                 x = np.true_divide(x, 255)
                 x = np.expand_dims(x, axis=0)
-                print ("preprocess compleated")
+                print ("preprocess completed")
             except Exception as e:
                 print(f"Exception preprocessing img: {e}" )
                 return jsonify({f"error":f"Exception preprocessing img: {e}"})
@@ -102,7 +102,7 @@ def val_img():
                 elif class_pred==3:
                     class_pred="Monoliosis"
 
-                message=f"{class_pred}"
+                message=f"{class_pred} prob: {preds}"
                 return jsonify({"img":message})
             except Exception as e:
                 print(f"Exception making predictions img: {e}" )
