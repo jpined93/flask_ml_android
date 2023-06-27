@@ -82,6 +82,12 @@ def val_img():
                     preds.append(individual_preds[0]) 
 
                 class_pred=np.argmax(np.array(preds))
+
+                second_closer_class=np.argmax(np.delete(np.array(preds),class_pred))
+
+                class_pred=class_pred if (class_pred-second_closer_class)<0.05 else second_closer_class
+
+
                 class_prob=preds[class_pred]
                 
                 if class_prob<0.5:
