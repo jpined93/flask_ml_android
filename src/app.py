@@ -88,7 +88,9 @@ def val_img():
                 
                 # Removing the largest element from temp list
                 second_closer_class.remove(max(second_closer_class))
-                
+                second_closer_class=max(second_closer_class)
+
+
                 class_pred=np.argmax(np.array(preds))
 
 
