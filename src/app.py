@@ -81,21 +81,21 @@ def val_img():
                     individual_preds=individual_preds.tolist()[0]
                     preds.append(individual_preds[0]) 
 
-                list1 = [10, 20, 4, 45, 99]
- 
-                # new_list is a set of list1
-                second_closer_class = set(preds)
+                preds_copy=preds.copy()
                 
-                # Removing the largest element from temp list
-                second_closer_class.remove(max(second_closer_class))
-                second_closer_class=max(second_closer_class)
 
+
+                first_result=max(preds)
+
+                preds_copy.remove(first_result)
+
+                second_result=max(preds_copy)
 
                 class_pred=np.argmax(np.array(preds))
 
 
-                if (preds[class_pred]-second_closer_class)>0.05 and preds.index(class_pred)==1:
-                        class_pred=preds.index(second_closer_class)
+                if (first_result-second_result)>0.05 and preds.index(class_pred)==1:
+                        class_pred=preds.index(second_result)
                 
                 
                 class_prob=preds[class_pred]
