@@ -76,8 +76,8 @@ def val_img():
 
             try:
                 preds=[]
-                for model in models:
-                    individual_preds = model.predict(x)
+                for index,model in enumerate(models):
+                    individual_preds = model.predict(x)*1.45 if index==0 else model.predict(x)
                     individual_preds=individual_preds.tolist()[0]
                     preds.append(individual_preds[0]) 
 
