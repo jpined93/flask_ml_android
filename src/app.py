@@ -77,17 +77,25 @@ def val_img():
             try:
                 preds=[]
                 for index,model in enumerate(models):
-                    individual_preds = model.predict(x)*1.45 if index==0 else model.predict(x)
+                    individual_preds = model.predict(x)*1.40 if index==0 else model.predict(x)
                     individual_preds=individual_preds.tolist()[0]
                     preds.append(individual_preds[0]) 
 
+                list1 = [10, 20, 4, 45, 99]
+ 
+                # new_list is a set of list1
+                second_closer_class = set(preds)
+                
+                # Removing the largest element from temp list
+                second_closer_class.remove(max(second_closer_class))
+                
                 class_pred=np.argmax(np.array(preds))
 
-                second_closer_class=np.argmax(np.delete(np.array(preds),class_pred))
 
-                class_pred=class_pred if (class_pred-second_closer_class)<0.05 else second_closer_class
-
-
+                if (preds[class_pred]-second_closer_class)>0.05 and preds.index(class_pred)==1:
+                        class_pred=preds.index(second_closer_class)
+                
+                
                 class_prob=preds[class_pred]
                 
                 if class_prob<0.5:
