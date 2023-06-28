@@ -76,20 +76,20 @@ def val_img():
 
             try:
                 preds=[]
-                for index,model in enumerate(models):
+                for model in models:
                     individual_preds = model.predict(x)
                     individual_preds=individual_preds.tolist()[0]
                     preds.append(individual_preds[0]) 
 
-                preds_copy=preds.copy()
+                # preds_copy=preds.copy()
                 
 
 
-                first_result=max(preds)
+                # first_result=max(preds)
 
-                preds_copy.remove(first_result)
+                # preds_copy.remove(first_result)
 
-                second_result=max(preds_copy)
+                # second_result=max(preds_copy)
 
                 class_pred=np.argmax(np.array(preds))
 
@@ -115,7 +115,7 @@ def val_img():
                 elif class_pred==3:
                     class_pred="Monoliosis"
 
-                message=f"{class_pred}"
+                message=f"{class_pred} probs:{preds}"
                 return jsonify({"img":message})
             except Exception as e:
                 print(f"Exception making predictions img: {e}" )
