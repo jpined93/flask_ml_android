@@ -77,7 +77,7 @@ def val_img():
             try:
                 preds=[]
                 for index,model in enumerate(models):
-                    individual_preds = model.predict(x)*1.40 if index==0 else model.predict(x)
+                    individual_preds = model.predict(x)
                     individual_preds=individual_preds.tolist()[0]
                     preds.append(individual_preds[0]) 
 
@@ -93,12 +93,12 @@ def val_img():
 
                 class_pred=np.argmax(np.array(preds))
 
-                # if preds[0]>=0.87:
-                #     class_pred=0 
+                if preds[0]>=0.67:
+                    class_pred=0 
                 
 
-                if (first_result-second_result)<0.02 and preds.index(first_result)==1:
-                    class_pred=preds.index(second_result)
+                # if (first_result-second_result)<0.02 and preds.index(first_result)==1:
+                #     class_pred=preds.index(second_result)
                 
                 
                 class_prob=preds[class_pred]
