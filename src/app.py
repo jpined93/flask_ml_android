@@ -94,8 +94,8 @@ def val_img():
                 class_pred=np.argmax(np.array(preds))
 
 
-                if (first_result-second_result)>0.05 and preds.index(class_pred)==1:
-                        class_pred=preds.index(second_result)
+                if (first_result-second_result)>0.05 and preds.index(first_result)==1:
+                    class_pred=preds.index(second_result)
                 
                 
                 class_prob=preds[class_pred]
