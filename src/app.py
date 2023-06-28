@@ -93,7 +93,7 @@ def val_img():
 
                 class_pred=np.argmax(np.array(preds))
 
-                if preds[0]>=0.84:
+                if preds[0]>=0.85:
                     class_pred=0 
                 
 
@@ -115,7 +115,7 @@ def val_img():
                 elif class_pred==3:
                     class_pred="Monoliosis"
 
-                message=f"{class_pred} prob: {preds}"
+                message=f"{class_pred}"
                 return jsonify({"img":message})
             except Exception as e:
                 print(f"Exception making predictions img: {e}" )
