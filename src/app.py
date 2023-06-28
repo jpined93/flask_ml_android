@@ -30,7 +30,7 @@ model_json.close()
 # model = tf.keras.models.model_from_json(loaded_model_json)
 # model.load_weights(Model_weights)
 
-models_path=["model_fito.h5","model_mazorca_negra.h5","model_monoliosis_ef.h5","model_monoliosis_intermedia_sf.h5"]
+models_path=["model_fito2.h5","model_mazorca_negra2.h5","model_monoliosis_ef2.h5","model_monoliosis_intermedia_sf2.h5"]
 models=[]
 
 for path in models_path:
