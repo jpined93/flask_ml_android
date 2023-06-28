@@ -93,7 +93,7 @@ def val_img():
 
                 class_pred=np.argmax(np.array(preds))
 
-                if preds[0]>=0.85:
+                if preds[0]>=0.87:
                     class_pred=0 
                 
 
